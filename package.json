@@ -1,0 +1,13 @@
+{
+  "name": "prettier-plugin-ecmascript",
+  "description": "A Prettier plugin for ECMAScript Programming Language",
+  "type": "module",
+  "scripts": {
+    "write": "prettier --plugin=./src/plugin.js --write ./example.ecmascript --config ./.prettierrc.json",
+    "check": "prettier --plugin=./src/plugin.js ./example.ecmascript --config ./.prettierrc.json"
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "acorn": "^8.11.3"
+  }
+}

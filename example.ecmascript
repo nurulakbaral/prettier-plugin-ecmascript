@@ -1,0 +1,15 @@
+const _String   =  "Hello World"
+const _Number   =  100
+
+const _Null     =  null
+const _Undefined    =    undefined
+
+const _Array    =    [
+  1, 2, 3, 4, 5]
+const _Object   =     {
+   name: "John Doe", age: 100 }
+
+const _Function = function(name, age) {return 100
+}
+const _ArrowFunction = (name, age) => {return 100
+}
