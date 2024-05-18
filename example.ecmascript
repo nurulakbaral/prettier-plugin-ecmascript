@@ -1,3 +1,5 @@
 const _String   =        "Hello World"
 const _Number   =      100
 
+const _Null     =  null
+const _Undefined    =    undefined

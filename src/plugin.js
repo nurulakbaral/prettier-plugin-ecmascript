@@ -83,7 +83,23 @@ const printers = {
       /** @type {ECMAScript.Identifier} identifierNode */
       let identifierNode = node;
       if (identifierNode.type === 'Identifier') {
-        const IdentifierDoc = $.group(identifierNode.name);
+        let IdentifierDoc = null;
+
+        /** Undefined */
+        if (identifierNode.name === 'undefined') {
+          let groupId = Symbol('assignment');
+          IdentifierDoc = [
+            $.group($.indent($.line), {
+              id: groupId,
+            }),
+            $.lineSuffixBoundary,
+            $.indentIfBreak('undefined', { groupId }),
+          ];
+
+          return IdentifierDoc;
+        }
+
+        IdentifierDoc = $.group(identifierNode.name);
 
         return IdentifierDoc;
       }
@@ -93,13 +109,29 @@ const printers = {
       if (literalNode.type === 'Literal') {
         let LiteralDoc = null;
 
+        /** Number */
         if (typeof literalNode.value === 'number') {
           LiteralDoc = [' ', literalNode.raw];
           return LiteralDoc;
         }
 
+        /** String */
         if (typeof literalNode.value === 'string') {
           LiteralDoc = $.group($.indent([$.line, literalNode.raw]));
+          return LiteralDoc;
+        }
+
+        /** Null */
+        if (literalNode.value === null) {
+          let groupId = Symbol('assignment');
+          LiteralDoc = [
+            $.group($.indent($.line), {
+              id: groupId,
+            }),
+            $.lineSuffixBoundary,
+            $.indentIfBreak('null', { groupId }),
+          ];
+
           return LiteralDoc;
         }
       }
