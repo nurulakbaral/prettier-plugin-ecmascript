@@ -1,5 +1,12 @@
-const _String   =        "Hello World"
-const _Number   =      100
-
-const _Null     =  null
-const _Undefined    =    undefined
+const _String =
+                         "Hello World";
+const _Number    =    100;
+const _Null    =       null;
+const _Undefined = undefined;
+const _Array = [1,
+ 2, 3, 4, 5, 10, 
+ 23, 22, 23, "Hello",
+  ""];
+const _Object = { Prop01: 1,
+ 1: "Hello",                
+            "Prop02":  [1, 2, 2, "Asdas", "Asdas", "Asdas", "Asdas"] };
