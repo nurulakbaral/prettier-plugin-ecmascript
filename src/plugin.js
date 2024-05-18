@@ -78,6 +78,15 @@ const printers = {
       if (identifierNode.type === 'Identifier') {
         let IdentifierDoc = '';
 
+        /** @type {ECMAScript.Property} parentNodeProperty */
+        let parentNodeProperty = path.getParentNode();
+        if (parentNodeProperty.type === 'Property') {
+          /** Key: String */
+          IdentifierDoc = identifierNode.name;
+
+          return IdentifierDoc;
+        }
+
         /** Primitive: Undefined */
         if (identifierNode.name === 'undefined') {
           let groupId = Symbol('assignment');
@@ -102,12 +111,23 @@ const printers = {
       if (literalNode.type === 'Literal') {
         let LiteralDoc = '';
 
-        /** @type {ECMAScript.ArrayExpression} parentNode */
-        let parentNode = path.getParentNode();
-        if (parentNode.type === 'ArrayExpression') {
+        /** @type {ECMAScript.ArrayExpression} parentNodeArrayExpression */
+        let parentNodeArrayExpression = path.getParentNode();
+        if (parentNodeArrayExpression.type === 'ArrayExpression') {
           /** Array Element: Number or String */
           if (typeof literalNode.value === 'number' || typeof literalNode.value === 'string') {
             LiteralDoc = $.group(literalNode.raw);
+          }
+
+          return LiteralDoc;
+        }
+
+        /** @type {ECMAScript.Property} parentNodeProperty */
+        let parentNodeProperty = path.getParentNode();
+        if (parentNodeProperty.type === 'Property') {
+          /** Key & Value: Number or String */
+          if (typeof literalNode.value === 'number' || typeof literalNode.value === 'string') {
+            LiteralDoc = literalNode.raw;
           }
 
           return LiteralDoc;
@@ -163,6 +183,39 @@ const printers = {
         ];
 
         return ArrayExpressionDoc;
+      }
+
+      /** @type {ECMAScript.ObjectExpression} objectExpressionNode */
+      let objectExpressionNode = node;
+      if (objectExpressionNode.type === 'ObjectExpression') {
+        let groupId = Symbol('assignment');
+        let propertiesDoc = [];
+
+        for (let index = 0; index < objectExpressionNode.properties.length; index++) {
+          let propertyDoc = path.call(print, 'properties', index);
+          propertiesDoc.push(propertyDoc);
+        }
+
+        let ObjectExpressionDoc = [
+          $.group($.indent($.line), {
+            id: groupId,
+          }),
+          $.lineSuffixBoundary,
+          $.indentIfBreak(
+            $.group(['{', $.indent([$.line, $.join([',', $.line], propertiesDoc)]), $.ifBreak(','), $.line, '}']),
+            { groupId },
+          ),
+        ];
+
+        return ObjectExpressionDoc;
+      }
+
+      /** @type {ECMAScript.Property} propertyNode */
+      let propertyNode = node;
+      if (propertyNode.type === 'Property') {
+        let PropertyDoc = $.group($.group([$.group(path.call(print, 'key')), ':', ' ', path.call(print, 'value')]));
+
+        return PropertyDoc;
       }
     },
   },
