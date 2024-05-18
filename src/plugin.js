@@ -1,15 +1,15 @@
-import * as Prettier from 'prettier'
-import * as ECMAScript from 'acorn'
+import * as Prettier from "prettier";
+import * as ECMAScript from "acorn";
 
-let $ = Prettier.doc.builders
+let $ = Prettier.doc.builders;
 
 const languages = [
   {
-    name: 'ECMAScript',
-    extensions: ['.ecmascript'],
-    parsers: ['ecmaScriptParse'],
+    name: "ECMAScript",
+    extensions: [".ecmascript"],
+    parsers: ["ecmaScriptParse"],
   },
-]
+];
 
 const parsers = {
   ecmaScriptParse: {
@@ -18,9 +18,9 @@ const parsers = {
      */
     parse: (text) =>
       ECMAScript.Parser.parse(text, {
-        ecmaVersion: 'latest',
+        ecmaVersion: "latest",
       }),
-    astFormat: 'ecmaScriptAst',
+    astFormat: "ecmaScriptAst",
     /**
      * @param {ECMAScript.Node} node
      */
@@ -30,29 +30,29 @@ const parsers = {
      */
     locEnd: (node) => node.end,
   },
-}
+};
 
 const printers = {
   ecmaScriptAst: {
     /**
      *
-     * @param {Prettier.AstPath<ECMAScript.Program | ECMAScript.Node>} path
+     * @param {Prettier.AstPath<unknown>} path
      * @param {Prettier.ParserOptions} options
      * @param {(path: Prettier.AstPath<ECMAScript.Program>) => Prettier.Doc} print
      * @returns Prettier.Doc | string
      */
     print: (path, options, print) => {
-      let node = path.getNode()
+      let node = path.getNode();
 
-      return options.originalText
+      return options.originalText;
     },
   },
-}
+};
 
 const plugin = {
   languages,
   parsers,
   printers,
-}
+};
 
-export default plugin
+export default plugin;
