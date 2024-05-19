@@ -4,10 +4,11 @@
   "type": "module",
   "scripts": {
     "write": "prettier --plugin=./src/plugin.js --write ./example.ecmascript --config ./.prettierrc.json",
-    "check": "prettier --plugin=./src/plugin.js ./example.ecmascript --config ./.prettierrc.json"
+    "check": "prettier --plugin=./src/plugin.js ./example.ecmascript --config ./.prettierrc.json",
+    "test": "node ./__tests__/basic.test.js"
   },
   "devDependencies": {
-    "prettier": "^3.2.5",
-    "acorn": "^8.11.3"
+    "acorn": "^8.11.3",
+    "prettier": "^3.2.5"
   }
 }
