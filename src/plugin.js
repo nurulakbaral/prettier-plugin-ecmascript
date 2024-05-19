@@ -42,6 +42,7 @@ const printers = {
      * @returns Prettier.Doc | string
      */
     print: (path, options, print) => {
+      let isSemicolon = options.semi ? ';' : '';
       let node = path.getNode();
 
       /** @type {ECMAScript.Program} programNode */
@@ -59,7 +60,7 @@ const printers = {
           variableDeclarationNode.kind,
           ' ',
           path.call(print, 'declarations', 0),
-          ';',
+          isSemicolon,
         ]);
 
         return VariableDeclarationDoc;
