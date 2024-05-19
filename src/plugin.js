@@ -160,7 +160,7 @@ const printers = {
         }
       }
 
-      /** @type {ECMAScript.ArrayExpression} assignmentExpressionNode */
+      /** @type {ECMAScript.ArrayExpression} arrayExpressionNode */
       let arrayExpressionNode = node;
       if (arrayExpressionNode.type === 'ArrayExpression') {
         let groupId = Symbol('assignment');
